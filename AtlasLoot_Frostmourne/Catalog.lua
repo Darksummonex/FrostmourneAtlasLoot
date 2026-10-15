@@ -78,9 +78,8 @@ SlashCmdList.FROSTMOURNECATALOG = function(message)
         return
     end
     if message and message:match("^%s*logi%s*$") and AtlasLoot_Data.FMLogi1 then Open("FMLogi1"); return end
-    if message and message:match("^%s*vendor%s*$") and ns.WartonCommand then
-        ns.WartonCommand("warton vendor")
-        return
+    if message and (message:match("^%s*scan") or message:match("^%s*pvp") or message:match("^%s*vendor") or message:match("^%s*warto[rn]*%s+scan") or message:match("^%s*warto[rn]*%s+vendor")) then
+        DEFAULT_CHAT_FRAME:AddMessage("Scanning commands were removed. Use /fml wartorn to browse saved items."); return
     end
     if message and (message:match("^%s*wartorn") or message:match("^%s*warton")) and ns.WartonCommand then
         ns.WartonCommand(message)

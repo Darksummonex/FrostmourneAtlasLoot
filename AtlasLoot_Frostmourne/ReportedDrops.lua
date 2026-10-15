@@ -6,7 +6,7 @@ function ns.RenameTokens(text)
     return (text:gsub("Badge of Justice","Justice"):gsub("#heroic#","Justice"):gsub("Emblem of Heroism","Justice"):gsub("Emblem of Valor","Valor")
         :gsub("#eofheroism#","Justice"):gsub("#eofvalor#","Valor"))
 end
--- Static Valor prices requested by Alex; vendor observations are separate.
+-- Static Valor prices requested by Laraystiri; vendor observations are separate.
 ns.StaticValorPrices = {
  [39728] = 700,
  [39757] = 700,
@@ -2505,16 +2505,470 @@ ns.FutureConquestPrices={
 }
 ns.SavageMarkItems={[40778]=true,[40779]=true,[40780]=true,[40797]=true,[40798]=true,[40799]=true,[40816]=true,[40817]=true,[40818]=true,[40836]=true,[40837]=true,[40838]=true,[40856]=true,[40857]=true,[40858]=true,[40898]=true,[40918]=true,[40930]=true,[40936]=true,[40960]=true,[40986]=true,[40987]=true,[40998]=true,[41004]=true,[41010]=true,[41016]=true,[41023]=true,[41024]=true,[41030]=true,[41041]=true,[41078]=true,[41084]=true,[41134]=true,[41140]=true,[41148]=true,[41154]=true,[41160]=true,[41202]=true,[41208]=true,[41214]=true,[41268]=true,[41269]=true,[41270]=true,[41271]=true,[41272]=true,[41278]=true,[41290]=true,[41301]=true,[41313]=true,[41324]=true,[41643]=true,[41644]=true,[41645]=true,[41646]=true,[41647]=true,[41658]=true,[41664]=true,[41675]=true,[41712]=true,[41770]=true,[41847]=true,[41848]=true,[41849]=true,[41850]=true,[41851]=true,[41912]=true,[41918]=true,[41924]=true,[41930]=true,[41937]=true,[41943]=true,[41949]=true,[41956]=true,[41962]=true,[41968]=true,[41990]=true,[41996]=true,[42002]=true,[42008]=true,[42014]=true,}
 ns.PvpDesignPrices={[41559]=1250,[41560]=1250,[41563]=1250,[41564]=1250,[41565]=1250,[41566]=1250,[41569]=1250,[41570]=1250,[41571]=1250,[41572]=1250,[41573]=1250,[41575]=1250,}
+
+-- Cached ilvl-200 vendor equipment; prices confirmed by the supplied vendor screenshots.
+local updatedPvpItems={
+ [40778]="1 #fmitem1000001#",
+ [40779]="1 #fmitem1000001#",
+ [40780]="1 #fmitem1000001#",
+ [40781]="2200 #faction#",
+ [40782]="2200 #faction#",
+ [40783]="2200 #faction#",
+ [40797]="1 #fmitem1000001#",
+ [40798]="1 #fmitem1000001#",
+ [40799]="1 #fmitem1000001#",
+ [40801]="1650 #faction#",
+ [40802]="1650 #faction#",
+ [40803]="1650 #faction#",
+ [40816]="1 #fmitem1000001#",
+ [40817]="1 #fmitem1000001#",
+ [40818]="1 #fmitem1000001#",
+ [40819]="2200 #faction#",
+ [40820]="2200 #faction#",
+ [40821]="2200 #faction#",
+ [40836]="1 #fmitem1000001#",
+ [40837]="1 #fmitem1000001#",
+ [40838]="1 #fmitem1000001#",
+ [40840]="2200 #faction#",
+ [40841]="2200 #faction#",
+ [40842]="2200 #faction#",
+ [40856]="1 #fmitem1000001#",
+ [40857]="1 #fmitem1000001#",
+ [40858]="1 #fmitem1000001#",
+ [40859]="1650 #faction#",
+ [40860]="1650 #faction#",
+ [40861]="1650 #faction#",
+ [40877]="1650 #faction#",
+ [40878]="1650 #faction#",
+ [40887]="1250 #faction#",
+ [40898]="1 #fmitem1000001#",
+ [40904]="2200 #faction#",
+ [40918]="1 #fmitem1000001#",
+ [40925]="1650 #faction#",
+ [40930]="1 #fmitem1000001#",
+ [40931]="2200 #faction#",
+ [40936]="1 #fmitem1000001#",
+ [40937]="2200 #faction#",
+ [40960]="1 #fmitem1000001#",
+ [40961]="1650 #faction#",
+ [40966]="1650 #faction#",
+ [40972]="1250 #faction#",
+ [40973]="1650 #faction#",
+ [40987]="1 #fmitem1000001#",
+ [40988]="2200 #faction#",
+ [40989]="2200 #faction#",
+ [40998]="1 #fmitem1000001#",
+ [41004]="1 #fmitem1000001#",
+ [41005]="1650 #faction#",
+ [41011]="2200 #faction#",
+ [41016]="1 #fmitem1000001#",
+ [41017]="2200 #faction#",
+ [41023]="1 #fmitem1000001#",
+ [41024]="1 #fmitem1000001#",
+ [41025]="2200 #faction#",
+ [41030]="1 #fmitem1000001#",
+ [41031]="2200 #faction#",
+ [41041]="1 #fmitem1000001#",
+ [41042]="1650 #faction#",
+ [41049]="1650 #faction#",
+ [41050]="1650 #faction#",
+ [41063]="1250 #faction#",
+ [41068]="1650 #faction#",
+ [41073]="1650 #faction#",
+ [41078]="1 #fmitem1000001#",
+ [41079]="2200 #faction#",
+ [41084]="1 #fmitem1000001#",
+ [41085]="2200 #faction#",
+ [41134]="1 #fmitem1000001#",
+ [41135]="1650 #faction#",
+ [41140]="1 #fmitem1000001#",
+ [41141]="1650 #faction#",
+ [41148]="1 #fmitem1000001#",
+ [41154]="1 #fmitem1000001#",
+ [41155]="2200 #faction#",
+ [41160]="1 #fmitem1000001#",
+ [41162]="2200 #faction#",
+ [41202]="1 #fmitem1000001#",
+ [41203]="2200 #faction#",
+ [41208]="1 #fmitem1000001#",
+ [41209]="1650 #faction#",
+ [41214]="1 #fmitem1000001#",
+ [41215]="1650 #faction#",
+ [41223]="1250 #faction#",
+ [41228]="1650 #faction#",
+ [41233]="1650 #faction#",
+ [41268]="1 #fmitem1000001#",
+ [41269]="1 #fmitem1000001#",
+ [41270]="1 #fmitem1000001#",
+ [41271]="1 #fmitem1000001#",
+ [41272]="1 #fmitem1000001#",
+ [41273]="1650 #faction#",
+ [41278]="1 #fmitem1000001#",
+ [41279]="1650 #faction#",
+ [41290]="1 #fmitem1000001#",
+ [41291]="1650 #faction#",
+ [41296]="2200 #faction#",
+ [41301]="1 #fmitem1000001#",
+ [41302]="2200 #faction#",
+ [41308]="2200 #faction#",
+ [41314]="2200 #faction#",
+ [41319]="2200 #faction#",
+ [41324]="1 #fmitem1000001#",
+ [41325]="2200 #faction#",
+ [41330]="1650 #faction#",
+ [41331]="1650 #faction#",
+ [41332]="1250 #faction#",
+ [41628]="1650 #faction#",
+ [41633]="1650 #faction#",
+ [41638]="1250 #faction#",
+ [41643]="1 #fmitem1000001#",
+ [41644]="1 #fmitem1000001#",
+ [41645]="1 #fmitem1000001#",
+ [41646]="1 #fmitem1000001#",
+ [41647]="1 #fmitem1000001#",
+ [41648]="2200 #faction#",
+ [41653]="2200 #faction#",
+ [41658]="1 #fmitem1000001#",
+ [41659]="2200 #faction#",
+ [41664]="1 #fmitem1000001#",
+ [41665]="2200 #faction#",
+ [41670]="2200 #faction#",
+ [41675]="1 #fmitem1000001#",
+ [41676]="2200 #faction#",
+ [41681]="1650 #faction#",
+ [41712]="1 #fmitem1000001#",
+ [41765]="1650 #faction#",
+ [41770]="1 #fmitem1000001#",
+ [41827]="1650 #faction#",
+ [41828]="1650 #faction#",
+ [41830]="1250 #faction#",
+ [41847]="1 #fmitem1000001#",
+ [41848]="1 #fmitem1000001#",
+ [41849]="1 #fmitem1000001#",
+ [41850]="1 #fmitem1000001#",
+ [41851]="1 #fmitem1000001#",
+ [41852]="2200 #faction#",
+ [41857]="2200 #faction#",
+ [41862]="2200 #faction#",
+ [41867]="1650 #faction#",
+ [41872]="1650 #faction#",
+ [41877]="1650 #faction#",
+ [41878]="1250 #faction#",
+ [41879]="1650 #faction#",
+ [41896]="1650 #faction#",
+ [41901]="1650 #faction#",
+ [41907]="1250 #faction#",
+ [41912]="1 #fmitem1000001#",
+ [41913]="2200 #faction#",
+ [41918]="1 #fmitem1000001#",
+ [41919]="2200 #faction#",
+ [41924]="1 #fmitem1000001#",
+ [41925]="2200 #faction#",
+ [41930]="1 #fmitem1000001#",
+ [41931]="1650 #faction#",
+ [41937]="1 #fmitem1000001#",
+ [41938]="1650 #faction#",
+ [41943]="1 #fmitem1000001#",
+ [41944]="2200 #faction#",
+ [41949]="1 #fmitem1000001#",
+ [41950]="2200 #faction#",
+ [41956]="1 #fmitem1000001#",
+ [41957]="2200 #faction#",
+ [41962]="1 #fmitem1000001#",
+ [41963]="1650 #faction#",
+ [41968]="1 #fmitem1000001#",
+ [41969]="1650 #faction#",
+ [41990]="1 #fmitem1000001#",
+ [41991]="2200 #faction#",
+ [41996]="1 #fmitem1000001#",
+ [42001]="2200 #faction#",
+ [42002]="1 #fmitem1000001#",
+ [42003]="2200 #faction#",
+ [42008]="1 #fmitem1000001#",
+ [42009]="1650 #faction#",
+ [42014]="1 #fmitem1000001#",
+ [42015]="1650 #faction#",
+ [42020]="1250 #faction#",
+ [42021]="1250 #faction#",
+ [42022]="1250 #faction#",
+ [42023]="1250 #faction#",
+ [42024]="1250 #faction#",
+ [42025]="1250 #faction#",
+ [42026]="1250 #faction#",
+ [42055]="1250 #faction#",
+ [42056]="1250 #faction#",
+ [42057]="1250 #faction#",
+ [42058]="1250 #faction#",
+ [42059]="1250 #faction#",
+ [42060]="1250 #faction#",
+ [42061]="1250 #faction#",
+ [42110]="1250 #faction#",
+ [42112]="1250 #faction#",
+ [42122]="1650 #faction#",
+ [42123]="1650 #faction#",
+ [42206]="1 #fmitem1000001#",
+ [42207]="2450 #faction#",
+ [42212]="1 #fmitem1000001#",
+ [42213]="1 #fmitem1000001#",
+ [42215]="1 #fmitem1000001#",
+ [42216]="1 #fmitem1000001#",
+ [42217]="1 #fmitem1000001#",
+ [42218]="1 #fmitem1000001#",
+ [42219]="1 #fmitem1000001#",
+ [42220]="1 #fmitem1000001#",
+ [42221]="1 #fmitem1000001#",
+ [42222]="1 #fmitem1000001#",
+ [42223]="1 #fmitem1000001#",
+ [42224]="1 #fmitem1000001#",
+ [42226]="950 #faction#",
+ [42231]="950 #faction#",
+ [42241]="2450 #faction#",
+ [42247]="950 #faction#",
+ [42254]="950 #faction#",
+ [42259]="2450 #faction#",
+ [42264]="950 #faction#",
+ [42269]="950 #faction#",
+ [42274]="2450 #faction#",
+ [42279]="950 #faction#",
+ [42284]="2450 #faction#",
+ [42289]="950 #faction#",
+ [42294]="1 #fmitem1000001#",
+ [42295]="1 #fmitem1000001#",
+ [42296]="1 #fmitem1000001#",
+ [42297]="1 #fmitem1000001#",
+ [42316]="3400 #faction#",
+ [42321]="3400 #faction#",
+ [42326]="3400 #faction#",
+ [42331]="3400 #faction#",
+ [42343]="1 #fmitem1000001#",
+ [42344]="1 #fmitem1000001#",
+ [42345]="2450 #faction#",
+ [42351]="2450 #faction#",
+ [42356]="1 #fmitem1000001#",
+ [42359]="3400 #faction#",
+ [42382]="1 #fmitem1000001#",
+ [42383]="3400 #faction#",
+ [42388]="1 #fmitem1000001#",
+ [42389]="3400 #faction#",
+ [42444]="1 #fmitem1000001#",
+ [42445]="1 #fmitem1000001#",
+ [42446]="1 #fmitem1000001#",
+ [42447]="1 #fmitem1000001#",
+ [42448]="1 #fmitem1000001#",
+ [42449]="700 #faction#",
+ [42484]="3400 #faction#",
+ [42489]="3400 #faction#",
+ [42494]="3400 #faction#",
+ [42501]="700 #faction#",
+ [42511]="1 #fmitem1000001#",
+ [42512]="700 #faction#",
+ [42517]="1 #fmitem1000001#",
+ [42518]="700 #faction#",
+ [42523]="1 #fmitem1000001#",
+ [42524]="950 #faction#",
+ [42529]="1 #fmitem1000001#",
+ [42530]="950 #faction#",
+ [42535]="1 #fmitem1000001#",
+ [42536]="950 #faction#",
+ [42556]="1 #fmitem1000001#",
+ [42557]="1 #fmitem1000001#",
+ [42558]="2450 #faction#",
+ [42563]="2450 #faction#",
+ [42568]="1 #fmitem1000001#",
+ [42569]="2450 #faction#",
+ [42574]="1 #fmitem1000001#",
+ [42575]="1 #fmitem1000001#",
+ [42576]="1 #fmitem1000001#",
+ [42577]="700 #faction#",
+ [42582]="700 #faction#",
+ [42587]="700 #faction#",
+ [42593]="1 #fmitem1000001#",
+ [42594]="1 #fmitem1000001#",
+ [42595]="1 #fmitem1000001#",
+ [42596]="700 #faction#",
+ [42601]="700 #faction#",
+ [42606]="700 #faction#",
+ [42611]="1 #fmitem1000001#",
+ [42612]="1 #fmitem1000001#",
+ [42613]="700 #faction#",
+ [42618]="1 #fmitem1000001#",
+ [42619]="700 #faction#",
+ [42851]="700 #faction#",
+ [44415]="1 #fmitem1000001#",
+ [44416]="1 #fmitem1000001#",
+ [44417]="3400 #faction#",
+ [44418]="3400 #faction#",
+ [142444]="1 #fmitem1000001#",
+ [142445]="1 #fmitem1000001#",
+ [142446]="1 #fmitem1000001#",
+ [142447]="1 #fmitem1000001#",
+ [142448]="1 #fmitem1000001#",
+}
+local updatedPvpGroups={
+ ["Savage"]={
+  {42557,"Savage Gladiator's Barrier",3,"1 #fmitem1000001#"},
+  {42511,"Savage Gladiator's Baton of Light",3,"1 #fmitem1000001#"},
+  {42356,"Savage Gladiator's Battle Staff",3,"1 #fmitem1000001#"},
+  {42221,"Savage Gladiator's Bonecracker",3,"1 #fmitem1000001#"},
+  {42295,"Savage Gladiator's Bonegrinder",3,"1 #fmitem1000001#"},
+  {42212,"Savage Gladiator's Chopper",3,"1 #fmitem1000001#"},
+  {42206,"Savage Gladiator's Cleaver",3,"1 #fmitem1000001#"},
+  {42294,"Savage Gladiator's Decapitator",3,"1 #fmitem1000001#"},
+  {42523,"Savage Gladiator's Endgame",3,"1 #fmitem1000001#"},
+  {42382,"Savage Gladiator's Energy Staff",3,"1 #fmitem1000001#"},
+  {44416,"Savage Gladiator's Focus Staff",3,"1 #fmitem1000001#"},
+  {42344,"Savage Gladiator's Gavel",3,"1 #fmitem1000001#"},
+  {42297,"Savage Gladiator's Greatsword",3,"1 #fmitem1000001#"},
+  {42535,"Savage Gladiator's Grimoire",3,"1 #fmitem1000001#"},
+  {42213,"Savage Gladiator's Hacker",3,"1 #fmitem1000001#"},
+  {42446,"Savage Gladiator's Heavy Crossbow",3,"1 #fmitem1000001#"},
+  {142446,"Savage Gladiator's Heavy Crossbow",3,"1 #fmitem1000001#"},
+  {42574,"Savage Gladiator's Idol of Resolve",3,"1 #fmitem1000001#"},
+  {42575,"Savage Gladiator's Idol of Steadfastness",3,"1 #fmitem1000001#"},
+  {42576,"Savage Gladiator's Idol of Tenacity",3,"1 #fmitem1000001#"},
+  {42219,"Savage Gladiator's Left Render",3,"1 #fmitem1000001#"},
+  {42220,"Savage Gladiator's Left Ripper",3,"1 #fmitem1000001#"},
+  {42611,"Savage Gladiator's Libram of Fortitude",3,"1 #fmitem1000001#"},
+  {42612,"Savage Gladiator's Libram of Justice",3,"1 #fmitem1000001#"},
+  {42445,"Savage Gladiator's Longbow",3,"1 #fmitem1000001#"},
+  {142445,"Savage Gladiator's Longbow",3,"1 #fmitem1000001#"},
+  {42215,"Savage Gladiator's Mutilator",3,"1 #fmitem1000001#"},
+  {42517,"Savage Gladiator's Piercing Touch",3,"1 #fmitem1000001#"},
+  {42296,"Savage Gladiator's Pike",3,"1 #fmitem1000001#"},
+  {42222,"Savage Gladiator's Pummeler",3,"1 #fmitem1000001#"},
+  {42223,"Savage Gladiator's Quickblade",3,"1 #fmitem1000001#"},
+  {42568,"Savage Gladiator's Redoubt",3,"1 #fmitem1000001#"},
+  {42529,"Savage Gladiator's Reprieve",3,"1 #fmitem1000001#"},
+  {142447,"Savage Gladiator's Rifle",3,"1 #fmitem1000001#"},
+  {42447,"Savage Gladiator's Rifle",3,"1 #fmitem1000001#"},
+  {42218,"Savage Gladiator's Right Ripper",3,"1 #fmitem1000001#"},
+  {42216,"Savage Gladiator's Shanker",3,"1 #fmitem1000001#"},
+  {42556,"Savage Gladiator's Shield Wall",3,"1 #fmitem1000001#"},
+  {42217,"Savage Gladiator's Shiv",3,"1 #fmitem1000001#"},
+  {42618,"Savage Gladiator's Sigil of Strife",3,"1 #fmitem1000001#"},
+  {42224,"Savage Gladiator's Slicer",3,"1 #fmitem1000001#"},
+  {42343,"Savage Gladiator's Spellblade",3,"1 #fmitem1000001#"},
+  {42388,"Savage Gladiator's Staff",3,"1 #fmitem1000001#"},
+  {42593,"Savage Gladiator's Totem of Indomitability",3,"1 #fmitem1000001#"},
+  {42594,"Savage Gladiator's Totem of Survival",3,"1 #fmitem1000001#"},
+  {42595,"Savage Gladiator's Totem of the Third Wind",3,"1 #fmitem1000001#"},
+  {42448,"Savage Gladiator's Touch of Defeat",3,"1 #fmitem1000001#"},
+  {142448,"Savage Gladiator's Touch of Defeat",3,"1 #fmitem1000001#"},
+  {42444,"Savage Gladiator's War Edge",3,"1 #fmitem1000001#"},
+  {142444,"Savage Gladiator's War Edge",3,"1 #fmitem1000001#"},
+  {44415,"Savage Gladiator's War Staff",3,"1 #fmitem1000001#"},
+ },
+ ["Hateful"]={
+  {42563,"Hateful Gladiator's Barrier",4,"2450 #faction#"},
+  {42512,"Hateful Gladiator's Baton of Light",4,"700 #faction#"},
+  {42359,"Hateful Gladiator's Battle Staff",4,"3400 #faction#"},
+  {42279,"Hateful Gladiator's Bonecracker",4,"950 #faction#"},
+  {42321,"Hateful Gladiator's Bonegrinder",4,"3400 #faction#"},
+  {42231,"Hateful Gladiator's Chopper",4,"950 #faction#"},
+  {42207,"Hateful Gladiator's Cleaver",4,"2450 #faction#"},
+  {42316,"Hateful Gladiator's Decapitator",4,"3400 #faction#"},
+  {42524,"Hateful Gladiator's Endgame",4,"950 #faction#"},
+  {42383,"Hateful Gladiator's Energy Staff",4,"3400 #faction#"},
+  {44418,"Hateful Gladiator's Focus Staff",4,"3400 #faction#"},
+  {42351,"Hateful Gladiator's Gavel",4,"2450 #faction#"},
+  {42331,"Hateful Gladiator's Greatsword",4,"3400 #faction#"},
+  {42536,"Hateful Gladiator's Grimoire",4,"950 #faction#"},
+  {42226,"Hateful Gladiator's Hacker",4,"950 #faction#"},
+  {42494,"Hateful Gladiator's Heavy Crossbow",4,"3400 #faction#"},
+  {42587,"Hateful Gladiator's Idol of Resolve",4,"700 #faction#"},
+  {42582,"Hateful Gladiator's Idol of Steadfastness",4,"700 #faction#"},
+  {42577,"Hateful Gladiator's Idol of Tenacity",4,"700 #faction#"},
+  {42264,"Hateful Gladiator's Left Render",4,"950 #faction#"},
+  {42269,"Hateful Gladiator's Left Ripper",4,"950 #faction#"},
+  {42851,"Hateful Gladiator's Libram of Fortitude",4,"700 #faction#"},
+  {42613,"Hateful Gladiator's Libram of Justice",4,"700 #faction#"},
+  {42489,"Hateful Gladiator's Longbow",4,"3400 #faction#"},
+  {42254,"Hateful Gladiator's Mutilator",4,"950 #faction#"},
+  {42518,"Hateful Gladiator's Piercing Touch",4,"700 #faction#"},
+  {42326,"Hateful Gladiator's Pike",4,"3400 #faction#"},
+  {42274,"Hateful Gladiator's Pummeler",4,"2450 #faction#"},
+  {42289,"Hateful Gladiator's Quickblade",4,"950 #faction#"},
+  {42569,"Hateful Gladiator's Redoubt",4,"2450 #faction#"},
+  {42530,"Hateful Gladiator's Reprieve",4,"950 #faction#"},
+  {42484,"Hateful Gladiator's Rifle",4,"3400 #faction#"},
+  {42259,"Hateful Gladiator's Right Ripper",4,"2450 #faction#"},
+  {42241,"Hateful Gladiator's Shanker",4,"2450 #faction#"},
+  {42558,"Hateful Gladiator's Shield Wall",4,"2450 #faction#"},
+  {42247,"Hateful Gladiator's Shiv",4,"950 #faction#"},
+  {42619,"Hateful Gladiator's Sigil of Strife",4,"700 #faction#"},
+  {42284,"Hateful Gladiator's Slicer",4,"2450 #faction#"},
+  {42345,"Hateful Gladiator's Spellblade",4,"2450 #faction#"},
+  {42389,"Hateful Gladiator's Staff",4,"3400 #faction#"},
+  {42606,"Hateful Gladiator's Totem of Indomitability",4,"700 #faction#"},
+  {42601,"Hateful Gladiator's Totem of Survival",4,"700 #faction#"},
+  {42596,"Hateful Gladiator's Totem of the Third Wind",4,"700 #faction#"},
+  {42501,"Hateful Gladiator's Touch of Defeat",4,"700 #faction#"},
+  {42449,"Hateful Gladiator's War Edge",4,"700 #faction#"},
+  {44417,"Hateful Gladiator's War Staff",4,"3400 #faction#"},
+ },
+ ["HatefulAccessories"]={
+  {41638,"Hateful Gladiator's Armwraps of Dominance",4,"1250 #faction#"},
+  {41332,"Hateful Gladiator's Armwraps of Salvation",4,"1250 #faction#"},
+  {41830,"Hateful Gladiator's Armwraps of Triumph",4,"1250 #faction#"},
+  {42110,"Hateful Gladiator's Band of Dominance",4,"1250 #faction#"},
+  {42112,"Hateful Gladiator's Band of Triumph",4,"1250 #faction#"},
+  {41628,"Hateful Gladiator's Belt of Dominance",4,"1650 #faction#"},
+  {41330,"Hateful Gladiator's Belt of Salvation",4,"1650 #faction#"},
+  {41827,"Hateful Gladiator's Belt of Triumph",4,"1650 #faction#"},
+  {41633,"Hateful Gladiator's Boots of Dominance",4,"1650 #faction#"},
+  {41331,"Hateful Gladiator's Boots of Salvation",4,"1650 #faction#"},
+  {41828,"Hateful Gladiator's Boots of Triumph",4,"1650 #faction#"},
+  {40972,"Hateful Gladiator's Bracers of Salvation",4,"1250 #faction#"},
+  {40887,"Hateful Gladiator's Bracers of Triumph",4,"1250 #faction#"},
+  {42057,"Hateful Gladiator's Cloak of Ascendancy",4,"1250 #faction#"},
+  {42059,"Hateful Gladiator's Cloak of Deliverance",4,"1250 #faction#"},
+  {42055,"Hateful Gladiator's Cloak of Dominance",4,"1250 #faction#"},
+  {42058,"Hateful Gladiator's Cloak of Salvation",4,"1250 #faction#"},
+  {42056,"Hateful Gladiator's Cloak of Subjugation",4,"1250 #faction#"},
+  {42060,"Hateful Gladiator's Cloak of Triumph",4,"1250 #faction#"},
+  {42061,"Hateful Gladiator's Cloak of Victory",4,"1250 #faction#"},
+  {41896,"Hateful Gladiator's Cord of Dominance",4,"1650 #faction#"},
+  {41877,"Hateful Gladiator's Cord of Salvation",4,"1650 #faction#"},
+  {41907,"Hateful Gladiator's Cuffs of Dominance",4,"1250 #faction#"},
+  {41878,"Hateful Gladiator's Cuffs of Salvation",4,"1250 #faction#"},
+  {40966,"Hateful Gladiator's Girdle of Salvation",4,"1650 #faction#"},
+  {40877,"Hateful Gladiator's Girdle of Triumph",4,"1650 #faction#"},
+  {40973,"Hateful Gladiator's Greaves of Salvation",4,"1650 #faction#"},
+  {40878,"Hateful Gladiator's Greaves of Triumph",4,"1650 #faction#"},
+  {42024,"Hateful Gladiator's Pendant of Ascendancy",4,"1250 #faction#"},
+  {42025,"Hateful Gladiator's Pendant of Deliverance",4,"1250 #faction#"},
+  {42022,"Hateful Gladiator's Pendant of Dominance",4,"1250 #faction#"},
+  {42026,"Hateful Gladiator's Pendant of Salvation",4,"1250 #faction#"},
+  {42023,"Hateful Gladiator's Pendant of Subjugation",4,"1250 #faction#"},
+  {42020,"Hateful Gladiator's Pendant of Triumph",4,"1250 #faction#"},
+  {42021,"Hateful Gladiator's Pendant of Victory",4,"1250 #faction#"},
+  {41073,"Hateful Gladiator's Sabatons of Dominance",4,"1650 #faction#"},
+  {41049,"Hateful Gladiator's Sabatons of Salvation",4,"1650 #faction#"},
+  {41228,"Hateful Gladiator's Sabatons of Triumph",4,"1650 #faction#"},
+  {41901,"Hateful Gladiator's Slippers of Dominance",4,"1650 #faction#"},
+  {41879,"Hateful Gladiator's Slippers of Salvation",4,"1650 #faction#"},
+  {41068,"Hateful Gladiator's Waistguard of Dominance",4,"1650 #faction#"},
+  {41050,"Hateful Gladiator's Waistguard of Salvation",4,"1650 #faction#"},
+  {41233,"Hateful Gladiator's Waistguard of Triumph",4,"1650 #faction#"},
+  {41063,"Hateful Gladiator's Wristguards of Dominance",4,"1250 #faction#"},
+  {41223,"Hateful Gladiator's Wristguards of Triumph",4,"1250 #faction#"},
+  {42123,"Medallion of the Alliance",4,"1650 #faction#"},
+  {42122,"Medallion of the Horde",4,"1650 #faction#"},
+ },
+}
 function ns.ApplyTokenNames()
     AddJusticeTrinket()
     for key,rows in pairs(AtlasLoot_Data or {}) do
-        if type(rows)=="table" then for _,row in ipairs(rows) do
+        if type(rows)=="table" and not (type(key)=="string" and key:match("^FMPvpVendor")) then for _,row in ipairs(rows) do
             if type(row)=="table" then
                 local state=processed[row]
                 if not state then state={raw={[2]=row[2],[3]=row[3],[4]=row[4],[5]=row[5],[6]=row[6]}}; processed[row]=state end
                 if state.generation~=(ns.CurrencyGeneration or 1) then
                 row[2],row[3]=state.raw[2],state.raw[3]
                 for _,field in ipairs({4,5,6}) do row[field]=ns.RenameTokens(state.raw[field]) end
+                -- Original AtlasLoot swaps these two Holy Paladin names; vendor scan confirms IDs.
+                if tonumber(row[2])==40904 then row[4]="=q4=Hateful Gladiator's Ornamented Chestguard"
+                elseif tonumber(row[2])==40925 then row[4]="=q4=Hateful Gladiator's Ornamented Gloves" end
                 local gem=ns.JusticeGemMap[tonumber(row[2])]
                 local honorGem=key=="PvP80Misc" and ns.JusticeGemPrices[tonumber(row[2])] and type(row[6])=="string" and row[6]:match("^%d+%s+#faction#$")
                 if gem and type(row[6])=="string" and (row[6]:match("^%d+%s+Justice$") or honorGem) and (not ns.RareGemsEnabled or ns.RareGemsEnabled()) then
@@ -2549,7 +3003,7 @@ function ns.ApplyTokenNames()
                 end
                 if type(state.raw[6])=="string" and state.raw[6]~="" then
                     local mount=tonumber(row[2])
-                    if ns.SavageMarkItems[mount] then row[6]="1 #fmitem100001#" end
+                    if ns.SavageMarkItems[mount] then row[6]="1 #fmitem1000001#" end
                     if ns.PvpDesignPrices[mount] and state.raw[6]:find("#faction#",1,true) then row[6]="1250 #faction#" end
                     if ns.ClassicHonorPrices[mount] then row[6]=ns.ClassicHonorPrices[mount].." #faction#" end
                     if mount==37865 then row[6]="20 #faction#" end
@@ -2592,11 +3046,20 @@ function ns.ApplyTokenNames()
                 if futureConquest and type(state.raw[6])=="string" and state.raw[6]~="" then
                     row[6]=futureConquest.." Conquest"
                 end
+                local observedPvp=updatedPvpItems[tonumber(state.raw[2])]
+                if observedPvp and type(state.raw[6])=="string" and state.raw[6]~="" then row[6]=observedPvp end
+                -- Frostmourne PvP vendors do not use the original arena-rating gates.
+                for _,field in ipairs({4,5,6}) do
+                    if type(row[field])=="string" then
+                        row[field]=row[field]:gsub("%s*#reqrating#%s*%d+","")
+                    end
+                end
                 state.generation=ns.CurrencyGeneration or 1
                 end
             end
         end end
     end
+    if ns.ApplyScannedPvpPrices then ns.ApplyScannedPvpPrices() end
 end
 local tokenEvents=CreateFrame("Frame")
 tokenEvents:RegisterEvent("ADDON_LOADED"); tokenEvents:RegisterEvent("PLAYER_LOGIN")
@@ -2999,4 +3462,567 @@ local function LearnLegendaryClass(tooltip)
 end
 for _,tooltip in ipairs({GameTooltip,ItemRefTooltip,AtlasLootTooltip}) do
     tooltip:HookScript("OnTooltipSetItem",LearnLegendaryClass)
+end
+
+local pvpLayoutMetadata={
+ [40778]={5,4,4},
+ [40779]={5,4,4},
+ [40780]={5,4,4},
+ [40781]={5,4,4},
+ [40782]={5,4,4},
+ [40783]={5,4,4},
+ [40797]={10,4,4},
+ [40798]={10,4,4},
+ [40799]={10,4,4},
+ [40801]={10,4,4},
+ [40802]={10,4,4},
+ [40803]={10,4,4},
+ [40816]={1,4,4},
+ [40817]={1,4,4},
+ [40818]={1,4,4},
+ [40819]={1,4,4},
+ [40820]={1,4,4},
+ [40821]={1,4,4},
+ [40836]={7,4,4},
+ [40837]={7,4,4},
+ [40838]={7,4,4},
+ [40840]={7,4,4},
+ [40841]={7,4,4},
+ [40842]={7,4,4},
+ [40856]={3,4,4},
+ [40857]={3,4,4},
+ [40858]={3,4,4},
+ [40859]={3,4,4},
+ [40860]={3,4,4},
+ [40861]={3,4,4},
+ [40877]={6,4,4},
+ [40878]={8,4,4},
+ [40887]={9,4,4},
+ [40898]={5,4,4},
+ [40904]={5,4,4},
+ [40918]={10,4,4},
+ [40925]={10,4,4},
+ [40930]={1,4,4},
+ [40931]={1,4,4},
+ [40936]={7,4,4},
+ [40937]={7,4,4},
+ [40960]={3,4,4},
+ [40961]={3,4,4},
+ [40966]={6,4,4},
+ [40972]={9,4,4},
+ [40973]={8,4,4},
+ [40987]={5,4,3},
+ [40988]={5,4,3},
+ [40989]={5,4,3},
+ [40998]={10,4,3},
+ [41004]={10,4,3},
+ [41005]={10,4,3},
+ [41011]={1,4,3},
+ [41016]={1,4,3},
+ [41017]={1,4,3},
+ [41023]={7,4,3},
+ [41024]={3,4,3},
+ [41025]={7,4,3},
+ [41030]={7,4,3},
+ [41031]={7,4,3},
+ [41041]={3,4,3},
+ [41042]={3,4,3},
+ [41049]={8,4,3},
+ [41050]={6,4,3},
+ [41063]={9,4,3},
+ [41068]={6,4,3},
+ [41073]={8,4,3},
+ [41078]={5,4,3},
+ [41079]={5,4,3},
+ [41084]={5,4,3},
+ [41085]={5,4,3},
+ [41134]={10,4,3},
+ [41135]={10,4,3},
+ [41140]={10,4,3},
+ [41141]={10,4,3},
+ [41148]={1,4,3},
+ [41154]={1,4,3},
+ [41155]={1,4,3},
+ [41160]={7,4,3},
+ [41162]={7,4,3},
+ [41202]={7,4,3},
+ [41203]={7,4,3},
+ [41208]={3,4,3},
+ [41209]={3,4,3},
+ [41214]={3,4,3},
+ [41215]={3,4,3},
+ [41223]={9,4,3},
+ [41228]={8,4,3},
+ [41233]={6,4,3},
+ [41268]={10,4,2},
+ [41269]={1,4,2},
+ [41270]={7,4,2},
+ [41271]={3,4,2},
+ [41272]={20,4,2},
+ [41273]={3,4,2},
+ [41278]={3,4,2},
+ [41279]={3,4,2},
+ [41290]={10,4,2},
+ [41291]={10,4,2},
+ [41296]={7,4,2},
+ [41301]={7,4,2},
+ [41302]={7,4,2},
+ [41308]={20,4,2},
+ [41314]={20,4,2},
+ [41319]={1,4,2},
+ [41324]={1,4,2},
+ [41325]={1,4,2},
+ [41330]={6,4,2},
+ [41331]={8,4,2},
+ [41332]={9,4,2},
+ [41628]={6,4,2},
+ [41633]={8,4,2},
+ [41638]={9,4,2},
+ [41643]={10,4,2},
+ [41644]={1,4,2},
+ [41645]={7,4,2},
+ [41646]={3,4,2},
+ [41647]={5,4,2},
+ [41648]={5,4,2},
+ [41653]={7,4,2},
+ [41658]={20,4,2},
+ [41659]={20,4,2},
+ [41664]={7,4,2},
+ [41665]={7,4,2},
+ [41670]={1,4,2},
+ [41675]={1,4,2},
+ [41676]={1,4,2},
+ [41681]={3,4,2},
+ [41712]={3,4,2},
+ [41765]={10,4,2},
+ [41770]={10,4,2},
+ [41827]={6,4,2},
+ [41828]={8,4,2},
+ [41830]={9,4,2},
+ [41847]={10,4,1},
+ [41848]={1,4,1},
+ [41849]={7,4,1},
+ [41850]={3,4,1},
+ [41851]={20,4,1},
+ [41852]={1,4,1},
+ [41857]={20,4,1},
+ [41862]={7,4,1},
+ [41867]={3,4,1},
+ [41872]={10,4,1},
+ [41877]={6,4,1},
+ [41878]={9,4,1},
+ [41879]={8,4,1},
+ [41896]={6,4,1},
+ [41901]={8,4,1},
+ [41907]={9,4,1},
+ [41912]={1,4,1},
+ [41913]={1,4,1},
+ [41918]={20,4,1},
+ [41919]={20,4,1},
+ [41924]={7,4,1},
+ [41925]={7,4,1},
+ [41930]={3,4,1},
+ [41931]={3,4,1},
+ [41937]={10,4,1},
+ [41938]={10,4,1},
+ [41943]={1,4,1},
+ [41944]={1,4,1},
+ [41949]={20,4,1},
+ [41950]={20,4,1},
+ [41956]={7,4,1},
+ [41957]={7,4,1},
+ [41962]={3,4,1},
+ [41963]={3,4,1},
+ [41968]={10,4,1},
+ [41969]={10,4,1},
+ [41990]={1,4,1},
+ [41991]={1,4,1},
+ [41996]={20,4,1},
+ [42001]={20,4,1},
+ [42002]={7,4,1},
+ [42003]={7,4,1},
+ [42008]={3,4,1},
+ [42009]={3,4,1},
+ [42014]={10,4,1},
+ [42015]={10,4,1},
+ [42020]={2,4,0},
+ [42021]={2,4,0},
+ [42022]={2,4,0},
+ [42023]={2,4,0},
+ [42024]={2,4,0},
+ [42025]={2,4,0},
+ [42026]={2,4,0},
+ [42055]={16,4,1},
+ [42056]={16,4,1},
+ [42057]={16,4,1},
+ [42058]={16,4,1},
+ [42059]={16,4,1},
+ [42060]={16,4,1},
+ [42061]={16,4,1},
+ [42110]={11,4,0},
+ [42112]={11,4,0},
+ [42122]={12,4,0},
+ [42123]={12,4,0},
+ [42206]={13,2,0},
+ [42207]={13,2,0},
+ [42208]={13,2,0},
+ [42212]={22,2,0},
+ [42213]={22,2,0},
+ [42215]={22,2,15},
+ [42216]={13,2,15},
+ [42217]={22,2,15},
+ [42218]={21,2,13},
+ [42219]={22,2,13},
+ [42220]={22,2,13},
+ [42221]={22,2,4},
+ [42222]={13,2,4},
+ [42223]={22,2,7},
+ [42224]={13,2,7},
+ [42226]={22,2,0},
+ [42227]={22,2,0},
+ [42231]={22,2,0},
+ [42232]={22,2,0},
+ [42241]={13,2,15},
+ [42242]={13,2,15},
+ [42247]={22,2,15},
+ [42248]={22,2,15},
+ [42254]={22,2,15},
+ [42255]={22,2,15},
+ [42259]={21,2,13},
+ [42260]={21,2,13},
+ [42264]={22,2,13},
+ [42265]={22,2,13},
+ [42269]={22,2,13},
+ [42270]={22,2,13},
+ [42274]={13,2,4},
+ [42275]={13,2,4},
+ [42279]={22,2,4},
+ [42280]={22,2,4},
+ [42284]={13,2,7},
+ [42285]={13,2,7},
+ [42289]={22,2,7},
+ [42290]={22,2,7},
+ [42294]={17,2,1},
+ [42295]={17,2,5},
+ [42296]={17,2,6},
+ [42297]={17,2,8},
+ [42316]={17,2,1},
+ [42317]={17,2,1},
+ [42321]={17,2,5},
+ [42322]={17,2,5},
+ [42326]={17,2,6},
+ [42327]={17,2,6},
+ [42331]={17,2,8},
+ [42332]={17,2,8},
+ [42343]={21,2,15},
+ [42344]={21,2,4},
+ [42345]={21,2,15},
+ [42346]={21,2,15},
+ [42351]={21,2,4},
+ [42352]={21,2,4},
+ [42356]={17,2,10},
+ [42359]={17,2,10},
+ [42362]={17,2,10},
+ [42382]={17,2,10},
+ [42383]={17,2,10},
+ [42384]={17,2,10},
+ [42388]={17,2,10},
+ [42389]={17,2,10},
+ [42390]={17,2,10},
+ [42444]={25,2,16},
+ [42445]={15,2,2},
+ [42446]={26,2,18},
+ [42447]={26,2,3},
+ [42448]={26,2,19},
+ [42449]={25,2,16},
+ [42450]={25,2,16},
+ [42484]={26,2,3},
+ [42485]={26,2,3},
+ [42489]={15,2,2},
+ [42490]={15,2,2},
+ [42494]={26,2,18},
+ [42495]={26,2,18},
+ [42501]={26,2,19},
+ [42502]={26,2,19},
+ [42511]={26,2,19},
+ [42512]={26,2,19},
+ [42513]={26,2,19},
+ [42517]={26,2,19},
+ [42518]={26,2,19},
+ [42519]={26,2,19},
+ [42523]={23,4,0},
+ [42524]={23,4,0},
+ [42525]={23,4,0},
+ [42529]={23,4,0},
+ [42530]={23,4,0},
+ [42531]={23,4,0},
+ [42535]={23,4,0},
+ [42536]={23,4,0},
+ [42537]={23,4,0},
+ [42556]={14,4,6},
+ [42557]={14,4,6},
+ [42558]={14,4,6},
+ [42559]={14,4,6},
+ [42563]={14,4,6},
+ [42564]={14,4,6},
+ [42568]={14,4,6},
+ [42569]={14,4,6},
+ [42570]={14,4,6},
+ [42574]={28,4,8},
+ [42575]={28,4,8},
+ [42576]={28,4,8},
+ [42577]={28,4,8},
+ [42578]={28,4,8},
+ [42582]={28,4,8},
+ [42583]={28,4,8},
+ [42587]={28,4,8},
+ [42588]={28,4,8},
+ [42593]={28,4,9},
+ [42594]={28,4,9},
+ [42595]={28,4,9},
+ [42596]={28,4,9},
+ [42597]={28,4,9},
+ [42601]={28,4,9},
+ [42602]={28,4,9},
+ [42606]={28,4,9},
+ [42607]={28,4,9},
+ [42611]={28,4,7},
+ [42612]={28,4,7},
+ [42613]={28,4,7},
+ [42614]={28,4,7},
+ [42618]={28,4,10},
+ [42619]={28,4,10},
+ [42620]={28,4,10},
+ [42851]={28,4,7},
+ [42852]={28,4,7},
+ [44415]={17,2,10},
+ [44416]={17,2,10},
+ [44417]={17,2,10},
+ [44418]={17,2,10},
+ [44419]={17,2,10},
+ [44420]={17,2,10},
+ [142444]={25,2,16},
+ [142445]={15,2,2},
+ [142446]={26,2,18},
+ [142447]={26,2,3},
+ [142448]={26,2,19},
+ [42122]={12,4,0},[42123]={12,4,0},
+}
+local originalPvpNext={}
+local function AttachPvpPage(source,key)
+    local rows=AtlasLoot_Data[source]
+    if not rows then return end
+    if originalPvpNext[source]==nil then originalPvpNext[source]=rows.Next or false end
+    rows.Next=key
+    local custom=AtlasLoot_Data[key]
+    custom.Prev=source;custom.Next=originalPvpNext[source] or nil
+    custom.Back=rows.Back
+    local following=custom.Next and AtlasLoot_Data[custom.Next]
+    if following and (following.Prev==source or following.Prev==key) then following.Prev=key end
+end
+local function PvpDescription(id)
+    local meta=pvpLayoutMetadata[id]
+    if not meta then return "=ds=" end
+    local slot,class,sub=meta[1],meta[2],meta[3]
+    if class==2 then
+        local weapon={[0]=1,[1]=1,[2]=2,[3]=5,[4]=6,[5]=6,[6]=7,[7]=10,[8]=10,[10]=9,[13]=13,[15]=4,[16]=11,[18]=3,[19]=12}
+        local hand=slot==17 and "#h2#, " or slot==22 and "#h4#, " or slot==21 and "#h3#, " or slot==13 and "#h1#, " or ""
+        return "=ds="..hand..(weapon[sub] and "#w"..weapon[sub].."#" or "")
+    end
+    if slot==14 then return "=ds=#w8#" end
+    if slot==23 then return "=ds=#s15#" end
+    if slot==28 then return "=ds=#s16#" end
+    local armorSlot={[2]=2,[6]=10,[8]=12,[9]=8,[11]=13,[12]=14,[16]=4}
+    return "=ds="..(armorSlot[slot] and "#s"..armorSlot[slot].."#" or "")..((slot==6 or slot==8 or slot==9) and ", #a"..sub.."#" or "")
+end
+function ns.RegisterUpdatedPvpVendors()
+    local menu=AtlasLoot_Data and AtlasLoot_Data.PVPMENU
+    if not menu or not AtlasLoot_TableNames then return end
+    ns.ReportedLookup=ns.ReportedLookup or {}
+    local function MakeRow(position,item)
+        return {position,tostring(item[1]),"","=q"..item[3].."="..item[2],PvpDescription(item[1]),item[4]}
+    end
+    for _,group in ipairs({"Savage","Hateful"})do
+        local items={};for _,item in ipairs(updatedPvpGroups[group])do items[#items+1]=item end
+        local order={[13]=1,[15]=2,[7]=3,[8]=3,[0]=4,[1]=4,[4]=5,[5]=5,[6]=6,[10]=7,[2]=8,[18]=9,[3]=10,[16]=11,[19]=12}
+        table.sort(items,function(a,b)
+            local am,bm=pvpLayoutMetadata[a[1]],pvpLayoutMetadata[b[1]]
+            local ar=am and (am[2]==2 and order[am[3]] or am[1]+20)or 99
+            local br=bm and (bm[2]==2 and order[bm[3]] or bm[1]+20)or 99
+            if ar~=br then return ar<br end
+            return a[2]<b[2]
+        end)
+        for page=1,math.ceil(#items/30)do
+            local root="FMUpdatedPvp"..group
+            local rows={Back="FMPvpWeapons"}
+            if page>1 then rows.Prev=root..(page-1)end
+            if page*30<#items then rows.Next=root..(page+1)end
+            for position=1,30 do
+                local item=items[(page-1)*30+position]
+                if item then rows[#rows+1]=MakeRow(position,item);ns.ReportedLookup[item[1]]=root..page end
+            end
+            AtlasLoot_Data[root..page]=rows
+            AtlasLoot_TableNames[root..page]={group.." Gladiator Weapons ("..page..")","AtlasLootFrostmourne"}
+        end
+        local key="FMUpdatedPvp"..group..1
+        local exists,used=false,{}
+        for _,r in ipairs(menu)do used[r[1]]=true;if r[2]==key then exists=true end end
+        if not exists then for position=1,30 do if not used[position]then menu[#menu+1]={position,key,"INV_Sword_86","=ds="..group.." Gladiator Weapons","=ds=Level 80"};break end end end
+    end
+    local accessory={{},{}}
+    local armor={}
+    for _,item in ipairs(updatedPvpGroups.HatefulAccessories)do
+        local meta=pvpLayoutMetadata[item[1]]
+        local slot=meta and meta[1]
+        if slot==6 or slot==8 or slot==9 then
+            local material=meta[3];armor[material]=armor[material]or {};armor[material][#armor[material]+1]=item
+        else
+            local column=slot==2 and 2 or 1
+            accessory[column][#accessory[column]+1]=item
+        end
+    end
+    local function Sort(items)
+        local order={[16]=1,[11]=2,[12]=3,[2]=4,[9]=1,[6]=2,[8]=3}
+        table.sort(items,function(a,b)
+            local am,bm=pvpLayoutMetadata[a[1]],pvpLayoutMetadata[b[1]]
+            local ar,br=order[am and am[1]]or 99,order[bm and bm[1]]or 99
+            if ar~=br then return ar<br end
+            return a[2]<b[2]
+        end)
+    end
+    local key="FMUpdatedPvpHatefulAccessories1"
+    local rows={}
+    for column=1,2 do
+        Sort(accessory[column])
+        local slotCounts={};
+        for index,item in ipairs(accessory[column])do
+            local slot=pvpLayoutMetadata[item[1]][1]; slotCounts[slot]=(slotCounts[slot] or 0)+1
+            local position=(column-1)*15+(slot==11 and 8+slotCounts[slot] or slot==12 and 12+slotCounts[slot] or slotCounts[slot])
+            rows[#rows+1]=MakeRow(position,item);ns.ReportedLookup[item[1]]=key
+        end
+    end
+    AtlasLoot_Data[key]=rows
+    AtlasLoot_TableNames[key]={"PvP Non-Set Epics: Accessories - Hateful","AtlasLootFrostmourne"}
+    AttachPvpPage("PvP80NonSet2",key)
+    local sources={[1]="PvP80NonSet3",[2]="PvP80NonSet4",[3]="PvP80NonSet5",[4]="PvP80NonSet6"}
+    for material,items in pairs(armor)do
+        Sort(items)
+        local armorKey="FMHatefulNonSetArmor"..material
+        local armorRows={}
+        for position,item in ipairs(items)do armorRows[#armorRows+1]=MakeRow(position,item);ns.ReportedLookup[item[1]]=armorKey end
+        AtlasLoot_Data[armorKey]=armorRows
+        AtlasLoot_TableNames[armorKey]={"PvP Non-Set Epics - Hateful","AtlasLootFrostmourne"}
+        AttachPvpPage(sources[material],armorKey)
+    end
+end
+
+local updatedPvpEvents=CreateFrame("Frame")
+updatedPvpEvents:RegisterEvent("PLAYER_LOGIN")
+updatedPvpEvents:RegisterEvent("ADDON_LOADED")
+updatedPvpEvents:SetScript("OnEvent",function(_,event,name)
+    if event=="PLAYER_LOGIN" or (name and name:match("^AtlasLoot")) then ns.RegisterUpdatedPvpVendors() end
+end)
+
+-- Keep the top-level PvP browser small while preserving original destination keys.
+local expansionEntries={Classic={},TBC={},Wrath={},Custom={}}
+local expansionOrder={"Classic","TBC","Wrath"}
+local expansionTitles={Classic="Classic",TBC="The Burning Crusade",Wrath="Wrath of the Lich King",Custom="Frostmourne Custom"}
+local expansionIcons={Classic="INV_Shield_05",TBC="INV_Helmet_96",Wrath="INV_Helmet_147",Custom="INV_Sword_62"}
+local classicPvp={PvP60Accessories1_A=true,PvP60Accessories1_H=true,PVPSET=true,PVPWeapons_A=true,PVPWeapons_H=true}
+local tbcPvp={PvP70Accessories1_A=true,PvP70Accessories1_H=true,PVP70RepSET=true,ARENASET=true,PvP70NonSet1=true,Arena4Weapons1=true,Hellfire=true,Zangarmarsh=true,Terokkar=true,Nagrand1=true}
+local function PvpExpansion(key)
+    if classicPvp[key] or key:match("^AB") or key:match("^WSG") or key=="AVMisc" then return "Classic" end
+    if tbcPvp[key] then return "TBC" end
+    if key:match("^PvP80") or key:match("^PVP80") or key=="LEVEL80PVPSETS" or key=="WINTERGRASPMENU" or key=="VentureBay1" or key:match("^Wrathful") or key:match("^FMDeadly") or key:match("^FMUpdatedPvp") then return "Wrath" end
+    return "Wrath"
+end
+function ns.OrganizePvpMenu()
+    if not AtlasLoot_Data or not AtlasLoot_Data.PVPMENU or not AtlasLoot_TableNames then return false end
+    local original=AtlasLoot_Data.PVPMENU
+    local changed=#original~=#expansionOrder
+    for index,expansion in ipairs(expansionOrder) do
+        if not original[index] or original[index][2]~="FMPvpExpansion"..expansion then changed=true end
+    end
+    local function Collect(rows)
+        for _,row in ipairs(rows or {}) do
+            local key=row[2]
+            if type(key)=="string" and key~="" and key~="PVPMENU2" and not key:match("^FMPvpExpansion") and not key:match("^FMPvpVendors") then
+                local clone={};for field,value in pairs(row) do clone[field]=value end
+                expansionEntries[PvpExpansion(key)][key]=clone
+            end
+        end
+    end
+    Collect(original);Collect(AtlasLoot_Data.PVPMENU2)
+    -- Keep seasonal weapons under AtlasLoot's original weapon category.
+    local weaponKeys={"FMUpdatedPvpSavage1","FMUpdatedPvpHateful1","FMDeadlyWeapons1","WrathfulGladiatorWeapons1"}
+    local weapons={Back="FMPvpExpansionWrath"}
+    for _,key in ipairs(weaponKeys) do
+        local entry=expansionEntries.Wrath[key]
+        if entry then
+            local copy={};for field,value in pairs(entry)do copy[field]=value end
+            copy[1]=#weapons+1;weapons[#weapons+1]=copy
+            expansionEntries.Wrath[key]=nil
+            local page=AtlasLoot_Data[key]
+            if page then page.Back="FMPvpWeapons" end
+        end
+    end
+    if #weapons>0 then
+        -- Preserve previously collected seasons during dynamic menu rebuilds.
+        local seen={};for _,r in ipairs(weapons)do seen[r[2]]=true end
+        for _,r in ipairs(AtlasLoot_Data.FMPvpWeapons or {})do if not seen[r[2]]then r[1]=#weapons+1;weapons[#weapons+1]=r end end
+        AtlasLoot_Data.FMPvpWeapons=weapons
+        AtlasLoot_TableNames.FMPvpWeapons={"PvP Weapons","Menu"}
+        expansionEntries.Wrath.FMPvpWeapons={1,"FMPvpWeapons","INV_Sword_86","=ds=PvP Weapons","=ds=Level 80"}
+    end
+    expansionEntries.Wrath.FMUpdatedPvpHatefulAccessories1=nil
+    local root={}
+    for index,expansion in ipairs(expansionOrder) do
+        local menuKey="FMPvpExpansion"..expansion
+        local entries={}
+        for key,row in pairs(expansionEntries[expansion]) do entries[#entries+1]=row end
+        table.sort(entries,function(a,b)
+            local aText=(a[4] or a[2]):gsub("=q%d=",""):gsub("=ds=","")
+            local bText=(b[4] or b[2]):gsub("=q%d=",""):gsub("=ds=","")
+            if aText~=bText then return aText<bText end
+            return a[2]<b[2]
+        end)
+        for page=1,math.max(1,math.ceil(#entries/30)) do
+            local pageKey=page==1 and menuKey or menuKey.."Page"..page
+            local rows={Back="PVPMENU"}
+            if page>1 then rows.Prev=page==2 and menuKey or menuKey.."Page"..(page-1) end
+            if page*30<#entries then rows.Next=menuKey.."Page"..(page+1) end
+            for position=1,30 do
+                local row=entries[(page-1)*30+position]
+                if row then
+                    row[1]=position;rows[#rows+1]=row
+                    -- Follow pagination, preserving class/category parent navigation.
+                    local function Reparent(key,seen)
+                        if seen[key] then return end;seen[key]=true
+                        local data=AtlasLoot_Data[key]
+                        if not data then return end
+                        if data.Back=="PVPMENU" or data.Back=="PVPMENU2" then data.Back=pageKey end
+                        if data.Next then Reparent(data.Next,seen) end
+                        if data.Prev then Reparent(data.Prev,seen) end
+                    end
+                    Reparent(row[2],{})
+                end
+            end
+            AtlasLoot_Data[pageKey]=rows
+            AtlasLoot_TableNames[pageKey]={"PvP Rewards - "..expansionTitles[expansion],"Menu"}
+        end
+        root[index]={index,menuKey,expansionIcons[expansion],"=ds="..expansionTitles[expansion],"=ds="..(expansion=="Classic" and "Level 60" or expansion=="TBC" and "Level 70" or "Level 80")}
+    end
+    AtlasLoot_Data.PVPMENU=root
+    if ns.ApplyScannedPvpPrices then ns.ApplyScannedPvpPrices() end
+    return changed
+end
+local pvpMenuEvents=CreateFrame("Frame")
+pvpMenuEvents:RegisterEvent("PLAYER_LOGIN");pvpMenuEvents:RegisterEvent("ADDON_LOADED")
+pvpMenuEvents:SetScript("OnEvent",function(_,event,name)
+    if event=="PLAYER_LOGIN" or (name and name:match("^AtlasLoot")) then ns.OrganizePvpMenu() end
+end)
+if AtlasLoot_ShowItemsFrame then
+    hooksecurefunc("AtlasLoot_ShowItemsFrame",function(dataID,dataSource,boss,parent)
+        if dataID=="PVPMENU" and ns.OrganizePvpMenu() then AtlasLoot_ShowItemsFrame(dataID,dataSource,boss,parent) end
+    end)
 end

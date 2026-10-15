@@ -42,6 +42,11 @@ function ns.ResolveCurrencyText(text)
     return text
 end
 function ns.CurrencyIcon(currency)
+    if currency=="savagery" then
+        local icon=GetItemIcon and GetItemIcon(1000001)
+        if type(icon)~="string" or icon=="" then icon="Interface\\Icons\\Spell_DeathKnight_BloodTap" end
+        return "|T"..icon..":14|t"
+    end
     if currency=="conquest" then
         local region=_G.PVPFrameArenaPointsIcon
         local icon=region and region.GetTexture and region:GetTexture()
@@ -61,6 +66,7 @@ function ns.InstallCurrencyIcons()
         local fixed=original(ns.ResolveCurrencyText(text))
         if type(fixed)~="string" then return fixed end
         fixed=fixed:gsub("#fmitem(%d+)#",function(id)
+            if tonumber(id)==1000001 then return ns.CurrencyIcon("savagery") end
             local icon=GetItemIcon and GetItemIcon(tonumber(id))
             if type(icon)~="string" or icon=="" then icon="Interface\\Icons\\INV_Misc_QuestionMark" end
             return "|T"..icon..":14|t"
@@ -69,10 +75,15 @@ function ns.InstallCurrencyIcons()
         fixed=fixed:gsub("|T[^|]-|t%s*(Justice)","%1"):gsub("|T[^|]-|t%s*(Valor)","%1")
         fixed=fixed:gsub("%f[%a]Justice%f[%A]",function() return ns.CurrencyIcon("justice").." Justice" end)
         fixed=fixed:gsub("%f[%a]Valor%f[%A]",function() return ns.CurrencyIcon("valor").." Valor" end)
-        -- Restrict this to a complete price so Emblem of Conquest and item names stay intact.
-        if fixed:match("^%d+%s+Conquest$") then
-            fixed=fixed:gsub("Conquest$",function() return ns.CurrencyIcon("conquest").." Conquest" end)
-        end
+        -- Handle mixed costs and stack suffixes, but only numeric price components.
+        fixed=fixed:gsub("(%d+%s+)|T[^|]-|t%s*(Conquest)%f[%A]","%1%2")
+        fixed=fixed:gsub("(%d+%s+)|T[^|]-|t%s*(Marks? of Savagery)%f[%A]","%1%2")
+        fixed=fixed:gsub("(%d+%s+)(Conquest)%f[%A]",function(amount,label)
+            return amount..ns.CurrencyIcon("conquest").." "..label
+        end)
+        fixed=fixed:gsub("(%d+%s+)(Marks? of Savagery)%f[%A]",function(amount,label)
+            return amount..ns.CurrencyIcon("savagery").." "..label
+        end)
         return fixed
     end
     installed=true

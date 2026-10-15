@@ -2309,37 +2309,16 @@ ns.DungeonEpicLayouts=layouts
 
 -- Keep long lists in the boss view, with both difficulty columns scrolling together.
 local scroll,child,buttons,current
-local verify=CreateFrame("Frame")
-local query=CreateFrame("GameTooltip","FMEpicVerifyTooltip",UIParent,"GameTooltipTemplate")
-local waiting,elapsed={},0
 local ShowInline
-local function QueueVerification(source)
-    waiting={}; elapsed=0
+local function VerifyCached(source)
+    local changed=false
     for _,item in ipairs(matches[source] or {}) do
-        if item[7]==0 then waiting[item[5]]=true end
-    end
-    verify:SetScript("OnUpdate",next(waiting) and function(self,dt)
-        elapsed=elapsed+dt
-        if elapsed<0.1 then return end
-        elapsed=0
-        local changed=false
-        local requested=false
-        for id,state in pairs(waiting) do
-            local name,link,quality,level=GetItemInfo(id)
-            if name then
-                for _,item in ipairs(matches[source]) do
-                    if item[5]==id then item[7]=(name==item[2] and level==item[6]) and 1 or -1 end
-                end
-                waiting[id]=nil; changed=true
-            elseif state==true and not requested then
-                requested=true; waiting[id]=GetTime()
-                query:SetOwner(UIParent,"ANCHOR_NONE")
-                pcall(query.SetHyperlink,query,"item:"..id..":0:0:0:0:0:0:0"); query:Hide()
-            elseif type(state)=="number" and GetTime()-state>5 then waiting[id]=nil end
+        if item[7]==0 then
+            local name,link,quality,level=GetItemInfo(item[5])
+            if name then item[7]=(name==item[2] and level==item[6]) and 1 or -1;changed=true end
         end
-        if changed then layouts[source]=nil; Apply(); ShowInline(source,true) end
-        if not next(waiting) then self:SetScript("OnUpdate",nil) end
-    end or nil)
+    end
+    if changed then layouts[source]=nil;Apply() end
 end
 local function Wheel(_,delta)
     if scroll then
@@ -2366,7 +2345,7 @@ local function InitView()
     scroll.bar=bar
 end
 ShowInline=function(dataID,refresh)
-    if not refresh then verify:SetScript("OnUpdate",nil); waiting={} end
+    VerifyCached(dataID)
     if scroll then scroll:Hide() end
     local columns=layouts[dataID]
     if not columns then current=nil; return end
@@ -2410,7 +2389,7 @@ ShowInline=function(dataID,refresh)
     end
     if rows>15 then scroll.bar:Show() else scroll.bar:Hide() end
     scroll:Show()
-    if not refresh then QueueVerification(dataID) end
+
 end
 local events=CreateFrame("Frame")
 events:RegisterEvent("ADDON_LOADED"); events:RegisterEvent("PLAYER_LOGIN")
