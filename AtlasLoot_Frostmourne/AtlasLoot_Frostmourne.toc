@@ -1,0 +1,15 @@
+## Interface: 30300
+## Title: AtlasLoot |cff33ccff[Frostmourne Custom Items]|r
+## Notes: Frostmourne custom loot, collections, professions and currency rewards.
+## Author: Alex / Codex
+## Version: 0.6.0
+## Dependencies: AtlasLoot
+## SavedVariables: AtlasLootFrostmourneDB
+
+Items.lua
+CurrencyConfig.lua
+Catalog.lua
+Warton.lua
+ReportedDrops.lua
+T7.lua
+EpicVersions.lua

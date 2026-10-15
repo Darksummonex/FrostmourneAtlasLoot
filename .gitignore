@@ -1,0 +1,8 @@
+# Publish addon source and release documentation only.
+*
+!.gitignore
+!.gitattributes
+!README.md
+!CHANGELOG.md
+!AtlasLoot_Frostmourne/
+!AtlasLoot_Frostmourne/**
