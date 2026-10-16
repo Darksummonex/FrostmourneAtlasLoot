@@ -2395,3 +2395,53 @@ local events=CreateFrame("Frame")
 events:RegisterEvent("ADDON_LOADED"); events:RegisterEvent("PLAYER_LOGIN")
 events:SetScript("OnEvent",Apply)
 if AtlasLoot_ShowItemsFrame then hooksecurefunc("AtlasLoot_ShowItemsFrame",function(dataID) ShowInline(dataID) end) end
+
+
+-- User-initiated Query Server support for the inline rows beyond buttons 1-30.
+function ns.InlineQueryData()
+    if not current or not scroll or not scroll:IsShown() then return end
+    local ids,seen={},{}
+    local function Add(value)
+        local id=tonumber(value)
+        if id and id>0 and not seen[id] then seen[id]=true;ids[#ids+1]=id end
+    end
+    for _,column in ipairs(layouts[current] or {}) do for _,row in ipairs(column) do Add(row[2]) end end
+    -- Include counterparts awaiting original-item cache verification on this page.
+    for _,item in ipairs(matches[current] or {}) do Add(item[5]);Add(item[1]) end
+    return current,ids
+end
+if type(AtlasLoot_QueryLootPage)=="function" then
+    local originalQuery=AtlasLoot_QueryLootPage
+    local runner,tooltip
+    AtlasLoot_QueryLootPage=function(...)
+        local page,ids=ns.InlineQueryData()
+        if not page then
+            if runner then runner:SetScript("OnUpdate",nil) end
+            return originalQuery(...)
+        end
+        if not runner then
+            runner=CreateFrame("Frame")
+            tooltip=CreateFrame("GameTooltip","FMManualPageQueryTooltip",UIParent,"GameTooltipTemplate")
+        end
+        local index,elapsed,settle=1,0,0
+        runner:SetScript("OnUpdate",function(self,dt)
+            local selected=current
+            if selected~=page or not scroll or not scroll:IsShown() then self:SetScript("OnUpdate",nil);tooltip:Hide();return end
+            elapsed=elapsed+dt
+            if index<=#ids then
+                if elapsed<.05 then return end
+                elapsed=0
+                tooltip:SetOwner(UIParent,"ANCHOR_NONE")
+                pcall(tooltip.SetHyperlink,tooltip,"item:"..ids[index]..":0:0:0:0:0:0:0")
+                tooltip:Hide();index=index+1
+            else
+                settle=settle+dt
+                if settle>=.5 then
+                    self:SetScript("OnUpdate",nil);tooltip:Hide()
+                    ShowInline(page)
+                end
+            end
+        end)
+    end
+end
+

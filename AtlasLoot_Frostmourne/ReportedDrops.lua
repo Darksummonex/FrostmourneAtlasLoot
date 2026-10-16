@@ -3185,16 +3185,24 @@ function ns.ApplyNaxxBossDrops()
             end
         end
     end
-    local bosses={"Patchwerk","Grobbulus","Gluth1","Thaddius","AnubRekhan","Faerlina","Maexxna","Razuvious","Gothik","FourHorsemen","Noth","Heigan","Loatheb","Sapphiron","KelThuzad"}
+    local bosses={"Patchwerk","Grobbulus","Gluth1","Gluth2","Thaddius","AnubRekhan","Faerlina","Maexxna","Razuvious","Gothik","FourHorsemen","Noth","Heigan","Loatheb","Sapphiron","KelThuzad"}
     for _,boss in ipairs(bosses) do for _,suffix in ipairs({"HEROIC","25ManHEROIC"}) do
         local rows=AtlasLoot_Data["Naxx80"..boss..suffix]
         if rows then
-            local used,exists={},false
-            for _,row in ipairs(rows) do used[row[1]]=true; if tonumber(row[2])==130041 then exists=true end end
-            if not exists then for position=1,30 do if not used[position] then
-                rows[#rows+1]={position,"130041","INV_Jewelcrafting_Gem_21","=q5=Mote of Light","=ds=Heroic boss drop"}
-                break
-            end end end
+            -- Keep the quest item and its reward together on heroic boss pages.
+            local used={}
+            for index=#rows,1,-1 do
+                local id=tonumber(rows[index][2])
+                if id==130041 or id==130031 then table.remove(rows,index)
+                else used[rows[index][1]]=true end
+            end
+            for position=1,29 do
+                if position~=15 and not used[position] and not used[position+1] then
+                    rows[#rows+1]={position,"130041","INV_Jewelcrafting_Gem_21","=q5=Mote of Light","=ds=Quest Item"}
+                    rows[#rows+1]={position+1,"130031","inv_axe_2h_artifactmaw_d_05","=q5=Armata Strigoi","=ds=Quest Reward"}
+                    break
+                end
+            end
         end
     end end
 end
@@ -4026,3 +4034,4 @@ if AtlasLoot_ShowItemsFrame then
         if dataID=="PVPMENU" and ns.OrganizePvpMenu() then AtlasLoot_ShowItemsFrame(dataID,dataSource,boss,parent) end
     end)
 end
+

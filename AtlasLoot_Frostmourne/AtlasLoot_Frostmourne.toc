@@ -2,7 +2,7 @@
 ## Title: AtlasLoot |cff33ccff[Frostmourne Custom Items]|r
 ## Notes: Frostmourne custom loot, collections, professions and currency rewards.
 ## Author: Laraystiri / Codex
-## Version: 0.6.1
+## Version: 0.6.2
 ## Dependencies: AtlasLoot
 ## SavedVariables: AtlasLootFrostmourneDB
 

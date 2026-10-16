@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.2 - 2026-10-15
+
+- Fix Query Server to include extension dungeon rows beyond AtlasLoot's original 30 item buttons. Requests run only after clicking the button and stop when leaving the page.
+- Mark Mote of Light as a quest item in heroic Naxxramas and show Armata Strigoi (130031) directly below as its quest reward.
+- Include Gluth's second heroic loot page so the quest pair appears together where space is available.
+
+Validation: Lua 5.1 compilation, manual-query behavior checks, quest-row checks, and successful player testing in game. This ZIP contains the extension only; requires AtlasLoot Enhanced v5.11.04. Replace the extension folder and restart WoW.
+
 ## 0.6.1 - 2026-10-15
 
 ## Changes

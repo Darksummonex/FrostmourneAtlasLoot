@@ -18,7 +18,7 @@ Extract the release ZIP into `Interface/AddOns`, replacing the existing `AtlasLo
 - Custom Inscription glyphs are placed under their class and Major/Minor categories. Mysterious Fortune Card is in Miscellaneous.
 - T7 difficulty mapping: Naxxramas, Sartharion and Malygos use original 10-player loot for both Normal sizes and original 25-player loot for both Heroic sizes.
 
-The broad custom-item candidate tab is hidden. **All addon-provided item-query, inventory and merchant scanners are removed.** Wartorn tags and legendary class restrictions can still be learned from tooltips the player opens. AtlasLoot's own Query Server button belongs to the base addon.
+The broad custom-item candidate tab is hidden. **Automatic item-query, inventory and merchant scanners are removed.** Wartorn tags and legendary class restrictions can still be learned from tooltips the player opens. AtlasLoot's Query Server button also queries extension dungeon rows when clicked; it stops when you leave the page.
 
 ## Commands
 
